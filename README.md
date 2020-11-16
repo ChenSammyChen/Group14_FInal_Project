@@ -18,7 +18,9 @@ In our final project for Data Visualisation and Story Telling we want to explore
 - Analysis of different genres according to their song features (e.g. danceability, acousticness, tempo, song length)
 - Popularity / song evolution of artists over time ("Where are they now?")
 - Differences in today's music tastes of UK, China, Italy, South Africa & Germany
+- Spotify's most frequent users
 
 ## Data
 - Extract data from specific playlists through the Spotify API using Python (https://developer.spotify.com/dashboard/)
 - https://www.kaggle.com/yamaerenay/spotify-dataset-19212020-160k-tracks?select=data.csv
+- and more
