@@ -1019,6 +1019,8 @@ We use the following playlists:
 
 - [Country](https://open.spotify.com/playlist/37i9dQZF1DX1lVhptIYRda)
 
+We do not add a **Pop** playlist as the previously discussed Top Hits Today playlist is from the pop genre.
+
 ### Indie
 
 ```{r indie}
@@ -1294,15 +1296,11 @@ classical_rc <- classical %>%
         panel.background = element_rect(fill = "#D2903C"),
         legend.position = "none")+
 NULL
-
-
 ```
 
 ### Metal
 
-```{r,metal }
-
-
+```{r metal }
 metal_basic <- getPlaylistSongs("spotify","37i9dQZF1DX9qNs32fujYe", token =  keys)
 
 metal_basic <- metal_basic %>%
@@ -1371,9 +1369,7 @@ NULL
 
 ### Country
 
-```{r, country}
-
-
+```{r country}
 country_basic <- getPlaylistSongs("spotify","37i9dQZF1DX1lVhptIYRda", token =  keys)
 
 country_basic <- country_basic %>%
@@ -1437,9 +1433,6 @@ country_rc <- country %>%
         panel.background = element_rect(fill = "#C54190"),
         legend.position = "none")+
 NULL
-
-
-
 ```
 
 ### All
@@ -1459,6 +1452,7 @@ country_rc
 #metal_rc + ggsave('metal.jpeg', height = 5, width = 5, units = 'in')
 #country_rc + ggsave('country.jpeg', height = 5, width = 5, units = 'in')
 ```
+
 
 
 ## Time
@@ -1483,6 +1477,16 @@ The "data_by_country.csv" file contains top 200 tracks figures(track name, artis
 You can click on the country you are interested in on the map and the other three plots change immediately to show daily steaming trend change, most popular tracks and artists in that specific country you've chosen!
 
 We found that steaming trends rise globally. Countries on the same continent share similar tastes except Ed Sheeran and Ariana Grande conquer the world. Meanwhile, countries speaking different languages tend to have different favorite songs
+
+It is clearly visible that the emotions and audio features of songs differ highly by genre. While Metal, Rock and Country are highly energetic genres, Classical music is highly acoustic and makes use of a lot of instruments. Indie music seems to keep a good balance of energetic and danceable but also acoustic and happy music. Hip Hop seems to make almost no use of instruments and if you're looking for happy music, it seems you best look for Indie, Hip Hop or Rock songs.
+
+What other features can you find that are interesting? Any surprising ones?
+
+Most of these features do not come as a surprise as we associate them with the respective genre - but isn't it interesting to see the data behind the stereotypes we have for different music genres and their fans?
+
+## Time period
+
+## Location
 
 It is interesting to see that one popular song is sometimes not enough to make the artist popular. For example, in Japan, Kenshi Yonezu is not even ranked among top 10 artists, but one of his songs is ranked 2# most popular. While popular artists always publish most popular tracks. In U.K., top 2 songs are produced by top 1 artist.
 
