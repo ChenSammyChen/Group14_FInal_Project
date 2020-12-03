@@ -22,6 +22,7 @@ In our final project for Data Visualisation and Story Telling we want to explore
 - Spotify's most frequent users
 
 ## Data
+
 - Spotify for Developers API & our own Spotify playlists (https://developer.spotify.com/dashboard/)
 - Spotify Dataset 1921-2020, Audio features of 160k+ songs released in between 1921 and 2020 (https://www.kaggle.com/yamaerenay/spotify-dataset-19212020-160k-tracks/discussion)
 - Spotify Top 200 hits per day per country (https://spotifycharts.com/regional)
