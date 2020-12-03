@@ -77,44 +77,43 @@ user$followers # :'( no followers
 
 ## Data
 
-The audio features we are going to use for analysis are in the following three aspects.
+The audio features that we can get from the Spotify metadata and that we will use for the analysis are: 
 
-*Mood:*
-- Danceability: whether is song is danceable, calculated based on combination of tempo, beat, etc
-- Valence: tracks with high valence sound more positive (happy and cheerful)
-- Energy: whether the music is intense and active 
-- Tempo: whether the overall beats per minute (BPM) is fast or slow
+**Popularity**
+- Higher popularity for songs that are being played a lot now compared to songs that were played a lot in the past. Artist and album popularity is derived mathematically from track popularity.
 
-*Properties:*
+**Properties:**
 - Loudness: loud music is usually high in decibels (dB)
-- Speechiness: whether there is presence of spoken works (audio books have a high speechiness)
-- Instrumentalness: whether the music has a lot of instruments or just vocals
-
-*Context*
 - Liveness: detects the presence of audience (more audience higher liveness)
-- Acousticness: whether the music makes natural sound, instead of being produced by electrical equipment
+- Speechiness: whether there is presence of spoken works (audio books have a high speechiness)
+- Explicit: Whether or not the track has explicit lyrics
+- Tempo: whether the overall beats per minute (BPM) is fast or slow
+- Duration_ms: track length in milliseconds 
+
+**Mood:**
+- Danceability: how suitable a song is for dancing, calculated based on tempo, beat, etc.
+- Valence: tracks with high valence sound more positive (happy and cheerful)
+- Energy: measure of a track’s intensity and activity; high energy is typically loud and noisy
+
+**Context**
+- Acousticness: whether the music uses acoustic instruments, rather than electrical equipment
+- Instrumentalness: whether the music has a lot of instruments or just vocals
 
 # Our own music preferences
 
 Music is heard by people daily in many parts of the world, and affects people in various ways from emotion regulation to cognitive development, along with providing a means for self-expression.
 
-What we listen tells a lot about who we are. Here we analyze our Spotify play lists to find out the similarities and differences among us five.
+What we listen tells a lot about who we are. Let's start by analyzing our own favourite Spotify playlists to find out the similarities and differences among the five of us.
 
-# Radar charts
-
-## Prepare data
+## Song features
 
 ### Marie
 
-Marie's Top Songs 2020
-
 - original: https://open.spotify.com/playlist/37i9dQZF1EM22Em6vPrOSO
 
-Retrieve playlist through API, then retrieve the features of every song with a for loop and create a data set with all the songs and their features
-
-https://open.spotify.com/playlist/37i9dQZF1EM22Em6vPrOSO
-
 ```{r retrieve playlist}
+# Retrieve playlist through API, then retrieve the features of every song with a for loop and create a data set with all the songs and their features
+
 # get playlist
 marie_top2020_basic <- getPlaylistSongs("spotify","37i9dQZF1EM22Em6vPrOSO", token =  keys)
 
@@ -130,9 +129,9 @@ for (i in marie_top2020_basic$id){
                   
 ```
 
-Fix playlist data set and delete duplicates
-
 ```{r fix data}
+# Fix playlist data set and delete duplicates
+
 # get rid of first line (that we added to set up the data frame)
 marie_top2020_wfeat <- marie_top2020_wfeat[-1,]
 
@@ -155,12 +154,12 @@ dupes <- marie_top2020 %>%
   get_dupes(id)
 
 # get rid of duplicates
-marie_top2020 <- marie_top2020 %>%
-  unique()
+# marie_top2020 <- marie_top2020 %>%
+#  unique()
 
 # check
-dupes <- marie_top2020 %>%
-  get_dupes(id)
+# dupes <- marie_top2020 %>%
+#  get_dupes(id)
 
 # check data 
 #head(marie_top2020)
@@ -208,21 +207,12 @@ sammy_top2020 <- sammy_top2020 %>%
 dupes <- sammy_top2020 %>%
   get_dupes(id)
 
-# get rid of duplicates
-sammy_top2020 <- sammy_top2020 %>%
-  unique()
-
-# check
-dupes <- sammy_top2020 %>%
-  get_dupes(id)
-
 # check data 
 #head(sammy_top2020)
 #glimpse(sammy_top2020)
 #skim(sammy_top2020)
 
 ```
-
 
 ### Ruchen
 
@@ -261,14 +251,6 @@ ruchen_top2020 <- ruchen_top2020 %>%
 dupes <- ruchen_top2020 %>%
   get_dupes(id)
 
-# get rid of duplicates
-ruchen_top2020 <- ruchen_top2020 %>%
-  unique()
-
-# check
-dupes <- ruchen_top2020 %>%
-  get_dupes(id)
-
 # check data 
 #head(ruchen_top2020)
 #glimpse(ruchen_top2020)
@@ -293,7 +275,6 @@ for (i in filippo_top2020_basic$id){
   filippo_top2020_wfeat <- rbind(filippo_top2020_wfeat, getFeatures(i, token = keys))
 }
                   
-
 # get rid of first line (that we added to set up the data frame)
 filippo_top2020_wfeat <- filippo_top2020_wfeat[-1,]
 
@@ -310,14 +291,6 @@ filippo_top2020 <- filippo_top2020 %>%
                   rename(name = '"Filippo"')
 
 # check if there are duplicates
-dupes <- filippo_top2020 %>%
-  get_dupes(id)
-
-# get rid of duplicates
-filippo_top2020 <- filippo_top2020 %>%
-  unique()
-
-# check
 dupes <- filippo_top2020 %>%
   get_dupes(id)
 
@@ -367,14 +340,6 @@ jason_top2020 <- jason_top2020 %>%
 dupes <- jason_top2020_wfeat %>%
   get_dupes(id)
 
-# get rid of duplicates
-jason_top2020 <- jason_top2020 %>%
-  unique()
-
-# check
-dupes <- jason_top2020 %>%
-  get_dupes(id)
-
 # check data 
 #head(jason_top2020)
 #glimpse(jason_top2020)
@@ -382,8 +347,7 @@ dupes <- jason_top2020 %>%
 
 ```
 
-
-## Plot radar charts
+### Plot
 
 ```{r marie_rc}
 marie_rc <- marie_top2020 %>% 
@@ -557,21 +521,18 @@ sammy_rc
 
 ```{r rc gif}
 # save each chart as jpeg
-filippo_rc + ggsave('filippo_rc.jpeg', height = 5, width = 5, units = 'in')
-jason_rc + ggsave('jason_rc.jpeg', height = 5, width = 5, units = 'in')
-marie_rc + ggsave('marie_rc.jpeg', height = 5, width = 5, units = 'in')
-ruchen_rc + ggsave('ruchen_rc.jpeg', height = 5, width = 5, units = 'in')
-sammy_rc + ggsave('sammy_rc.jpeg', height = 5, width = 5, units = 'in')
+# filippo_rc + ggsave('filippo_rc.jpeg', height = 5, width = 5, units = 'in')
+# jason_rc + ggsave('jason_rc.jpeg', height = 5, width = 5, units = 'in')
+# marie_rc + ggsave('marie_rc.jpeg', height = 5, width = 5, units = 'in')
+# ruchen_rc + ggsave('ruchen_rc.jpeg', height = 5, width = 5, units = 'in')
+#sammy_rc + ggsave('sammy_rc.jpeg', height = 5, width = 5, units = 'in')
 ```
 
+Looks like our music tastes are quite similar? Filippo seems to enjoy energetic music more whereas Jason seems to like acoustic music.
 
-# Density charts
+## Popularity & Pace
 
-Next, we want to directly compare our music tastes.
-
-## Data Preparation
-
-First, we want to combine all our songs into one data set
+Next, we want to directly compare our music taste in terms of how popular the songs are that we listen to and how fast the tempo (in beats per minute) is. Let's look at our differences! (or similarities?)
 
 ```{r combined dataset}
 # combine data sets
@@ -587,9 +548,7 @@ skim(spotify_all)
 
 ```
 
-Now, let's visualise our differences! (or similarities?)
-
-## Tempo
+### Tempo
 
 ```{r tempo}
 levels <- c("Sammy","Ruchen", "Marie", "Jason","Filippo")
@@ -641,11 +600,11 @@ tempo <- spotify_all %>%
               size = 0.2)+
   NULL
 
-tempo + ggsave('tempo.jpeg')
+tempo
+#tempo + ggsave('tempo.jpeg')
 ```
 
-
-## Song popularity
+### Popularity
 
 ```{r popularity}
 levels <- c("Sammy","Ruchen", "Marie", "Jason","Filippo")
@@ -700,8 +659,13 @@ popularity <- spotify_all %>%
               size = 0.2)+
   NULL
 
-popularity + ggsave('popularity.jpeg')
+popularity
+# popularity + ggsave('popularity.jpeg')
 ```
+
+No we know that Filippo seems to like all of his songs to have the same tempo. Ruchen, Filippo and Marie seem to enjoy rather unknown songs as well!
+
+Nevertheless, we are just a small sample of Spotify listeners. 
 
 > But what makes a song popular? Surely the most popular playlist on Spotify will tell us!
 
@@ -709,15 +673,12 @@ popularity + ggsave('popularity.jpeg')
 
 ## Today's Top 100
 
-We checked today's most popular playlist on Spotify and used the audio features mentioned above to find out why today’s top hits are the most popular.
+Maybe we can better understand music popularity through the most listened to playlist on Spotify, [Today's Top Hits](https://open.spotify.com/playlist/37i9dQZF1DXcBWIGoYBM5M). 
 
-## Distribution of song dimensions
-
-Wanted to explore gender dynamics for artist > manually imputed gender dynamics onto playlist
-
-This playlist is used: https://open.spotify.com/playlist/37i9dQZF1DXcBWIGoYBM5M
+Let's check today's most popular songs from Spotify and usethe audio features mentioned above to find out why today’s top hits are the most popular and if there are any differences in what a song sounds like depending on the artist's genre
 
 ```{r top 100 dimension distribution}
+# wanted to explore gender dynamics for artist; playlist is retrieved from API but we manually imputed gender dynamics onto playlist
 popular <- read_csv("popular.csv")
 
 popular<-janitor::clean_names(popular)
@@ -756,15 +717,20 @@ scale_color_manual(values = c("#bc13fe","#1DB954"))+
        subtitle = "No one cares about the instrument you play",
        x = "",
        y = "",
-       colour="",fill="")
+       colour="",
+       fill="",
+       caption = "Source: https://developer.spotify.com")
 
-box_pop + ggsave('boxplot_of_top_songs.jpeg', units = 'in')
+box_pop
+# box_pop + ggsave('boxplot_of_top_songs.jpeg', units = 'in')
 
 ```
 
-> But this is only what makes today’s music popular. Let’s see which factors are most important in determining popularity!
+Seems like popular music is all about the danceability and energy of a track. Today's popular songs seem to not be played live or involve many instruments. It is also interesting to see that songs from female artists seem to overall be happier (higher valence) and more acoustic.
 
-## Regression
+> But this is only what makes today’s music popular. Let’s see which factors are most important in determining popularity overall!
+
+## Predicting popularity 
 
 We want to find out which features play a key part in determining popularity on a more representative dataset.
 
