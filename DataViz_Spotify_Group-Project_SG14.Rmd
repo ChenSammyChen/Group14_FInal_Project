@@ -901,7 +901,8 @@ inspect(docs[[1]])
 docs <- tm_map(docs, stripWhitespace)
 inspect(docs[[1]])
 
-# remove irrelevant words
+# remove irrelevant words 
+# dont remove "like" as it can also mean "to like something"
 words <- c("con", "dadadadadada","lalalala","tã°", "pumpum", "que", "get", "let", "one", "two", "three", "four","can","got","cause","now","just")
 docs <- tm_map(docs, removeWords, words)
 inspect(docs[[1]])
@@ -994,6 +995,11 @@ saveWidget(wordcloud,"tmp.html",selfcontained = F)
 
 ```
 
+We can see that for the most popular songs at the moment, **yeah**, **like** and **know** are the most used words in song lyrics. Plotting these for different genres will yield many similar words but surely also large differences in the words.
+
+Overall, next to the music and its features, the lyrics and their meaning play a great role when it comes to listening to music. People often like songs or artists which they can relate or which describe a feeling that they desire. Thereby, the lyrics of a song can say a lot about the emotions and situation of both the artist and the listener.
+
+On the other hand, many emotions and thoughts are expressed through the music and the melodies themselves. Let's have a look at how the audio features differ per genre.
 
 ## Genres
 
