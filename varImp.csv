@@ -1,0 +1,12 @@
+﻿type,importance
+acousticness,100
+speechiness,97.84
+valence,77.76
+danceability ,57.26
+instrumentalness ,47.73
+explicit,44.73
+energy,27.46
+liveness ,26.82
+loudness ,13.59
+tempo ,12.58
+duration_ms,0
