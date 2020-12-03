@@ -842,7 +842,7 @@ Let's have a look at 4 factors that influence music taste and preferences!
 
 ## Content
 
-First, we try to understand the content behind a song. For that, we use text mining on Spotify's Top 50 World playlist to understand what are the most frequently appeared words.
+First, we try to understand the content behind a song. For that, we use text mining on Spotify's [Top 50 World](https://open.spotify.com/playlist/2nbZ56KHmaU7THqwuInhxd) playlist to understand what are the most frequently appeared words.
              
 ```{r by content analysis}
 # Construct path to a folder where our songs' corpus will be built
@@ -1453,44 +1453,45 @@ country_rc
 #country_rc + ggsave('country.jpeg', height = 5, width = 5, units = 'in')
 ```
 
-
-
-## Time
-
-We use the kaggle dataset and build an interactive story consisting of three dashboards.
-The first one visualizes the top 10 prolific artists in each decade. 1950s to 1980s have witnessed proliferation of artist creations (Queen, The Beatles, The Rolling Stones, Bob Dylan).
-
-The second line charts shows how the audio features about mood, properties, and context are changing over time. On average, music is getting louder, more energetic, and more explicit. Meanwhile, valence, instrumentalness and speechiness are also decreasing. 
-
-The relevant artists and tracks in each decade rated from today's audience are changing. The Beatles and Led Zeppelin are audience’ all time favorites. Pop Smoke has two tracks in the top 10 popular tracks. 
-
-Feel free to play with different filters more [here](https://public.tableau.com/profile/ruchen8489#!/vizhome/Group14_Spotify_ByDecade/Story?publish=yes)
-
-
-
-## Location
-
-We use the data set containing top hit playlists of countries around the globe and built a dashboard consisting of four plots.
-
-The "data_by_country.csv" file contains top 200 tracks figures(track name, artist and streaming) per day per country around the globe. You can download csv [here](https://spotifycharts.com/regional)
-
-You can click on the country you are interested in on the map and the other three plots change immediately to show daily steaming trend change, most popular tracks and artists in that specific country you've chosen!
-
-We found that steaming trends rise globally. Countries on the same continent share similar tastes except Ed Sheeran and Ariana Grande conquer the world. Meanwhile, countries speaking different languages tend to have different favorite songs
-
 It is clearly visible that the emotions and audio features of songs differ highly by genre. While Metal, Rock and Country are highly energetic genres, Classical music is highly acoustic and makes use of a lot of instruments. Indie music seems to keep a good balance of energetic and danceable but also acoustic and happy music. Hip Hop seems to make almost no use of instruments and if you're looking for happy music, it seems you best look for Indie, Hip Hop or Rock songs.
 
 What other features can you find that are interesting? Any surprising ones?
 
 Most of these features do not come as a surprise as we associate them with the respective genre - but isn't it interesting to see the data behind the stereotypes we have for different music genres and their fans?
 
-## Time period
+## Time
+
+Another highly influential factor on music and which songs or artists are popular is time and period or decade tracks were released in and listened to. 
+
+We use the 1921-2020 data set again and build an interactive story consisting of three dashboards.You can investigate the data and find out more about it [here](https://public.tableau.com/profile/ruchen8489#!/vizhome/Group14_Spotify_ByDecade/Story?publish=yes) or by scanning this QR code:
+
+![](time.jpeg)
+
+
+We can see that songs' audio features change over time. On average, music is getting louder, more energetic, and more explicit. Meanwhile, valence, instrumentalness and speechiness are also decreasing. These plots also show the significance of certain historical events and eras; for example, in the war and post-war eras (40s and 50s) we see that music is less danceable, energetic, happy or instrumental. During the Hippie eras in the 60s and 70s, we can observe increases in music's positiveness and energy.
+
+In the second dashboard, we can investigate which artists from different decades are still relevant today and were, therefore, also most likely most popular during those decades. Again, the relevant artists and songs change over time. Over the last 100 years, the Beatles and Led Zeppelin are people's all time favorites.
+
+Lastly, we can look at the most prolific artists in each decade calculated by the number of tracks produced. Again, these change steadily and artists have to work a great deal (produce lots of songs!) to stay on top of the industry. Music success is short - it doesn't take long until the next song or artists hits #1 in the charts and replaces previously loved artists. 
+
+**Feel free to investigate more yourself!**
 
 ## Location
 
+Lastly, the region, country and/or culture is also relevant to understand music preferences.
+
+We use data containing top hit playlists per country and built a dashboard showing streaming trends worldwide and/or per country. The file contains top 200 tracks figures (track name, artist and streaming) per day per country around the globe. You can download the data [here](https://spotifycharts.com/regional).
+
+You can investigate the data and find out more about it [here]https://public.tableau.com/profile/sammy.chen#!/vizhome/Musictrendandtasteanalysisbycountry/Dashboard1?publish=yes) or by scanning this QR code:
+
+![](location.jpeg)
+
+You can click on the country you are interested in on the map and the other three plots change immediately to show daily steaming trends, most popular tracks and artists in that specific country you've chosen!
+
+We found that steaming trends rise globally. Countries on the same continent share similar tastes - except many Western artisits such as Ed Sheeran and Ariana Grande conquer the world and are relevant in almost all countries gloablly. Meanwhile, countries speaking different languages than English tend to have further favourite songs and artists from their own language. 
+
 It is interesting to see that one popular song is sometimes not enough to make the artist popular. For example, in Japan, Kenshi Yonezu is not even ranked among top 10 artists, but one of his songs is ranked 2# most popular. While popular artists always publish most popular tracks. In U.K., top 2 songs are produced by top 1 artist.
 
-Find out more [here](https://public.tableau.com/profile/sammy.chen#!/vizhome/Musictrendandtasteanalysisbycountry/Dashboard1?publish=yes)
 
 # Conclusion
 
