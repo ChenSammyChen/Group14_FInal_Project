@@ -836,13 +836,14 @@ While we can generate a model with all features being highly significant, we can
 
 > Unfortunately, song popularity isn’t this simple. We have to take more factors into consideration… 
 
+Let's have a look at 4 factors that influence music taste and preferences!
+
 > Content, genres, time & location
 
 ## Content
 
-In this section we use text mining on the top 50 World Playlists to understand what are the most frequently appeared words.
+First, we try to understand the content behind a song. For that, we use text mining on Spotify's Top 50 World playlist to understand what are the most frequently appeared words.
              
-
 ```{r by content analysis}
 # Construct path to a folder where our songs' corpus will be built
 yourPath <- "Lyrics_groupproject"
@@ -900,6 +901,7 @@ inspect(docs[[1]])
 docs <- tm_map(docs, stripWhitespace)
 inspect(docs[[1]])
 
+# remove irrelevant words
 words <- c("con", "dadadadadada","lalalala","tã°", "pumpum", "que", "get", "let", "one", "two", "three", "four","can","got","cause","now","just")
 docs <- tm_map(docs, removeWords, words)
 inspect(docs[[1]])
@@ -980,33 +982,15 @@ top_n <- findFreqTerms(DTM, 125)
 print(top_n)
 # "know" "like" "yeah"
 
-# 5) Bar Chart of n most freq words
-
-DTM_tbl_tidy %>%  
-        group_by(word) %>% 
-        summarise(total = sum(wordCount)) %>% 
-        arrange(desc(total)) %>% 
-        top_n(10) %>% 
-        ggplot(aes(x = reorder(word, total), y = total, fill = word)) +
-        geom_bar(stat = "identity") + 
-        theme(legend.position = "none",
-              axis.text = element_text(size = 10, colour= "green"),
-              plot.title = element_text(size = 10, face = "bold", colour = "green",hjust = 0.5),
-              axis.title = element_text(size = 10), plot.subtitle = element_text(size = 8,hjust = 0.5, colour = "green"),panel.background = element_rect(fill = "black",
-                                                                                                                                                         colour = "black",
-                                                                                                                                                         size = 0.5, linetype = "solid"),plot.background = element_rect(fill = "black")) +
-        coord_flip() +
-        labs(title = "Top 10 Most Frequent Words in the
-Spotify Top 50 World Playlist",
-             x = "",
-             y = "", subtitle = "excluding common verbs and conjunctions")
-
-
-
 # word clouds
 
 # figPaths = system.file("spotify.png",package = "wordcloud2")
-wordcloud2(wordCountDoc, color = "random-light",backgroundColor = "black") 
+wordcloud <- wordcloud2(wordCountDoc, color = rep_len(c("#00FF80", "#ffff00", "#FF0080", "#8000FF", "#00FFFF"),nrow(wordCountDoc)), backgroundColor = "#191414") 
+
+wordcloud
+
+library("htmlwidgets")
+saveWidget(wordcloud,"tmp.html",selfcontained = F)
 
 ```
 
