@@ -1,7 +1,5 @@
 # Group14_Final_Project
-<<<<<<< HEAD
-Hi! We want to explore audio features and build a machine learning approach using spotify API and Python
-=======
+
 In our final project for Data Visualisation and Story Telling we want to explore song features and attributes based on data from Spotify using R and Tableau. 
 
 ## Background
@@ -27,4 +25,4 @@ In our final project for Data Visualisation and Story Telling we want to explore
 - Extract data from specific playlists through the Spotify API using Python (https://developer.spotify.com/dashboard/)
 - https://www.kaggle.com/yamaerenay/spotify-dataset-19212020-160k-tracks?select=data.csv
 - and more
->>>>>>> 6d12c32d1cbe6c56f71d67287ac6feee89c39a5d
+
