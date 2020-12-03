@@ -1,5 +1,7 @@
 ---
-title: "Analysis 1 - Our own music tastes"
+title: "Data Visualisation & Story Telling - Group Project - Spotify"
+author: "Study Group 14"
+date: 03/12/2020
 output: html_document
 ---
 
@@ -10,7 +12,6 @@ devtools::install_github("ricardo-bion/ggradar", dependencies=TRUE)
 
 ```{r loading packages, include=FALSE}
 #devtools::install_github("ricardo-bion/ggradar", dependencies = TRUE)
-
 library(Rspotify)
 library(ggplot2)
 library(tidyverse)
@@ -38,20 +39,31 @@ library(lubridate)
 library(Hmisc)
 library(readr)
 library(gghalves)
+#Spotify colours: #1db954(green) and #191414(black) for the Tableau
 ```
 
 # Introduction
-Music is so present in everyone's life but have you ever thought about the data behind the music that you listen to every day? Let's have a look at the music on Spotify, one of the biggest music streaming service. We are going to analyze the audio features, content, time, location, and much more.
+Have you listened to music today? Probably! Music is so present in everyone's life and we're constantly exposed to it everyday, all day.
+
+**But have you ever thought about the data behind the music that you listen to every day?**
+
+Chances are you you have used Spotify before. Did you know you could retrieve specific song, album and artist metadata from their Spotify Data Catalouge? Let's have a look at the data behind music on Spotify, one of the biggest music streaming services worldwide. We are going to analyze the audio features, content, time, location, and much more.
+
+**Let us show you music in a completely different light and find out what makes popular music!**
 
 ## Spotify API set-up
-The tool that we use to retrieve the data is Spotify API for developers.It allows us to retrieve JSON metadata about music artists, albums, and tracks, directly from the Spotify Data Catalogue.
-The instructions we refered to for setting up Spotify API are [here](https://r-music.rbind.io/posts/2018-10-01-rspotify/)!
+The tool that we use to retrieve the data is the Spotify API for developers. It allows us to retrieve JSON metadata about music artists, albums, and tracks, directly from the Spotify Data Catalogue.
+
+The instructions we referred to for setting up Spotify API are [here](https://r-music.rbind.io/posts/2018-10-01-rspotify/). You can find more information on the API or set it up yourself on [Spotify for Developers](https://developer.spotify.com). 
 
 ```{r set up spotify API}
-# keys <- spotifyOAuth("app_id","client_id","client_secret")
+# set up API connection with personal app_id, client_id, client_secret
+# feel free to connect your own account!
 
+# keys <- spotifyOAuth("app_id","client_id","client_secret")
 keys <- spotifyOAuth("dataviz","b9bd44a451e94288af529470c5d3ccf0", "c0f6d90ce49d4ded95887bf45c46f958")
 
+# We wil use this key whenever we try to retrieve music from the API
 ```
 
 ```{r check API}
@@ -62,8 +74,6 @@ user$display_name # user name
 # check followers
 user$followers # :'( no followers
 ```
-
-**Spotify colours: #1db954(green) and #191414(black) for the Tableau**
 
 ## Data
 
