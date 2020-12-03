@@ -830,6 +830,9 @@ featimportance <- varImp%>%
 featimportance
 ```
 
+It seems like acousticness and speechiness and valence have the highest influence on song popularity. According to our mode, acousticness and speechiness should be kept to a minimum and the song should not be too happy or make use of many instruments. Rather, songs that are highly danceable and energetic as well as include explicit language seem to be born for success!
+
+While we can generate a model with all features being highly significant, we can only explain about half of the variance in our data.
 
 > Unfortunately, song popularity isn’t this simple. We have to take more factors into consideration… 
 
