@@ -1495,25 +1495,22 @@ It is interesting to see that one popular song is sometimes not enough to make t
 
 # Conclusion
 
-**There is no one way to understand and predict music preferences and popularity**
+We found that **today’s popular music is all about danceability and energy;** it is less about live music, acoustic tracks or use of actual instruments. Acoustic songs, conveying positive moods or using a lot of speech seem to negatively influence song popularity while danceable songs with high energy and explicit words seem to guarantee success.
 
-* However similar they are, **every individual’s music taste is unique.**
+Caution though! **Music is too diverse to be generalised in a statistical model**
 
-* **Today’s popular music all about danceability and energy;** it is less about live music, acoustic tracks or use of actual instruments
+In order to better understand what determines popularity and people's music taste we must understand the following:
 
-* Acoustic songs, conveying positive moods or using a lot of speech seem to negatively influence song popularity while danceable songs with high energy and explicit words seem to guarantee success - Caution though! **Music is too diverse to be generalised in a statistical model**
+  1. **Genre**: Music preferences differ by genre
+  2. **Content**: Lyrics and their meaning highly influence songs
+  3. **Time period**: Music taste and preferences evolve over time; however, some artists and songs survive time and are still relevant today; either way, *success is often short* and all artists try to survive in a highly competitive music industry
+  5. **Location**: Music taste and preferences differ by country; some songs reach people worldwide while others stay local
+  
+We find that **there is no one way to understand and predict music preferences and popularity**
 
-* We must keep the following in mind
+However similar we may be - remember - **everyone’s music taste is unique**!
 
-  1. *Music preferences differ by genre*
-  2. *Lyrics and their meaning highly influence songs*
-  3. *Music taste and preferences evolve over time;* however, some artists and songs survive time and are still relevant today
-  4. Either way, *success is often short* and all artists try to survive in a highly competitive music industry
-  5. *Music taste and preferences differ by country;* some songs reach people worldwide while others stay local
-
-Everyone’s music taste is unique.
-
-You can explore the data as much as you like – at the end of the day, only you know what makes you like a song!
+> You can explore the data behind your favourite songs as much as you like – at the end of the day, only you know what makes you like a song!
 
 
 
