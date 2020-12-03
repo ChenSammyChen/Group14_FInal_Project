@@ -1002,10 +1002,463 @@ wordcloud2(wordCountDoc, color = "random-light",backgroundColor = "black")
 
 ## Genres
 
-Music preferences differ highly by genre, which somehow corresponds to listens' mood or social identity. Here we choose 6 most identifiable genres to see the feature distribution using radar charts. 
+Music preferences differ highly by genre as genres often correspond to listeners' mood or social identity. Here we choose 6 of the most popular and most identifiable genres to see the differences in their song features. 
+
+We use the following playlists:
+
+- [Indie](https://open.spotify.com/playlist/37i9dQZF1DX2Nc3B70tvx0)
+
+- [Hiphop](https://open.spotify.com/playlist/37i9dQZF1DWT5MrZnPU1zD)
+
+- [Classical](https://open.spotify.com/playlist/37i9dQZF1DWWEJlAGA9gs0)
+
+- [Rock](https://open.spotify.com/playlist/37i9dQZF1DWXRqgorJj26U)
+
+- [Metal](https://open.spotify.com/playlist/37i9dQZF1DX9qNs32fujYe)
+
+- [Country](https://open.spotify.com/playlist/37i9dQZF1DX1lVhptIYRda)
+
+### Indie
+
+```{r indie}
+# get playlist
+indie_basic <- getPlaylistSongs("spotify","37i9dQZF1DX2Nc3B70tvx0", token =  keys)
+
+indie_basic <- indie_basic %>%
+  unique()
+# get all features for that playlist
+
+# create data set with any 1 song
+indie_wfeat <- getFeatures("3bH4HzoZZFq8UpZmI2AMgV", token = keys)
+
+# for loop all song ids from the playlist through the getFeatures function
+for (i in indie_basic$id){
+  indie_wfeat <- rbind(indie_wfeat, getFeatures(i, token = keys))
+}
+                  
+# get rid of first line (that we added to set up the data frame)
+indie_wfeat <- indie_wfeat[-1,]
+
+# join playlist df and feature df to have all song info in one data set
+indie <- left_join(indie_basic, indie_wfeat, by = "id") 
+
+# fix data set
+indie <- indie %>% 
+                  # eliminate irrelevant columns
+                  select(-uri, -analysis_url, -time_signature) %>% 
+                  # add 1 columns with name for later when joining all of us 
+                  cbind("Indie") %>% 
+                  # rename that column
+                  rename(name = '"Indie"')
+
+# check if there are duplicates
+dupes <- indie_wfeat %>%
+  get_dupes(id)
+
+#plot radar chart
+indie_rc <- indie %>% 
+  select(danceability, valence, speechiness, instrumentalness, acousticness, liveness, energy) %>% 
+  ggRadar(colour = "white",
+          # transparency
+          alpha = 0.8, 
+          # get rid of points
+          size = 0,
+          # set y axis limits
+          ylim = c(0,1))+
+  labs(title = "Indie",
+       caption = "Source: https://developer.spotify.com",
+       x = "",
+       y = "")+
+  # edit theme
+  theme(text = element_text(colour = "white", size = 10, family = "Helvetica Neue Bold"),
+        plot.title = element_text(size = 30, family = "Helvetica Neue Bold", hjust = 0),
+        plot.subtitle = element_text(size = 11, family = "Helvetica Neue Light", hjust = 0.5),
+        plot.caption = element_text(size = 6, family = "Helvetica Neue Light"),
+        axis.title.x = element_text(size = 10, family = "Helvetica Neue Bold"),
+        axis.text.x = element_text(colour = "white", size = 10, family = "Helvetica Neue Medium"),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        plot.margin=grid::unit(c(1,1,0.5,0.5), "cm"),
+        panel.grid = element_line(colour = "#f2f2f2", 
+                                  size = 0.4, 
+                                  linetype = 2),
+        plot.background = element_rect(fill = "#5786D0"),
+        panel.background = element_rect(fill = "#5786D0"),
+        legend.position = "none")+
+NULL
+```
+
+### Hip Hop
+
+```{r hip hop}
+# get playlist
+hiphop_basic <- getPlaylistSongs("spotify","37i9dQZF1DWT5MrZnPU1zD", token =  keys)
+
+hiphop_basic <- hiphop_basic %>%
+  unique()
+# get all features for that playlist
+
+# create data set with any 1 song
+hiphop_wfeat <- getFeatures("3bH4HzoZZFq8UpZmI2AMgV", token = keys)
+
+# for loop all song ids from the playlist through the getFeatures function
+for (i in hiphop_basic$id){
+  hiphop_wfeat <- rbind(hiphop_wfeat, getFeatures(i, token = keys))
+}
+                  
+# get rid of first line (that we added to set up the data frame)
+hiphop_wfeat <- hiphop_wfeat[-1,]
+
+# join playlist df and feature df to have all song info in one data set
+hiphop <- left_join(hiphop_basic, hiphop_wfeat, by = "id") 
+
+# fix data set
+hiphop <- hiphop %>% 
+                  # eliminate irrelevant columns
+                  select(-uri, -analysis_url, -time_signature) %>% 
+                  # add 1 columns with name for later when joining all of us 
+                  cbind("Hip Hop") %>% 
+                  # rename that column
+                  rename(name = '"Hip Hop"')
+
+# check if there are duplicates
+dupes <- hiphop_wfeat %>%
+  get_dupes(id)
+
+hiphop_rc <- hiphop %>% 
+  select(danceability, valence, speechiness, instrumentalness, acousticness, liveness, energy) %>% 
+  ggRadar(colour = "white",
+          # transparency
+          alpha = 0.8, 
+          # get rid of points
+          size = 0,
+          # set y axis limits
+          ylim = c(0,1))+
+  labs(title = "Hip Hop",
+      caption = "Source: https://developer.spotify.com",
+       x = "",
+       y = "") +
+  # edit theme
+  theme(text = element_text(colour = "white", size = 10, family = "Helvetica Neue Bold"),
+        plot.title = element_text(size = 30, family = "Helvetica Neue Bold", hjust = 0),
+        plot.subtitle = element_text(size = 11, family = "Helvetica Neue Light", hjust = 0.5),
+        plot.caption = element_text(size = 6, family = "Helvetica Neue Light"),
+        axis.title.x = element_text(size = 10, family = "Helvetica Neue Bold"),
+        axis.text.x = element_text(colour = "white", size = 10, family = "Helvetica Neue Medium"),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        plot.margin=grid::unit(c(1,1,0.5,0.5), "cm"),
+        panel.grid = element_line(colour = "#f2f2f2", 
+                                  size = 0.4, 
+                                  linetype = 2),
+        plot.background = element_rect(fill = "#4D796A"),
+        panel.background = element_rect(fill = "#4D796A"),
+        legend.position = "none")+
+NULL
+```
+
+### Rock
+
+```{r rock}
+rock_basic <- getPlaylistSongs("spotify","37i9dQZF1DWXRqgorJj26U", token =  keys)
+
+rock_basic <- rock_basic %>%
+  unique()
+# get all features for that playlist
+
+# create data set with any 1 song
+rock_wfeat <- getFeatures("3bH4HzoZZFq8UpZmI2AMgV", token = keys)
+
+# for loop all song ids from the playlist through the getFeatures function
+for (i in rock_basic$id){
+  rock_wfeat <- rbind(rock_wfeat, getFeatures(i, token = keys))
+}
+                  
+# get rid of first line (that we added to set up the data frame)
+rock_wfeat <- rock_wfeat[-1,]
+
+# join playlist df and feature df to have all song info in one data set
+rock <- left_join(rock_basic, rock_wfeat, by = "id") 
+
+# fix data set
+rock <- rock %>% 
+                  # eliminate irrelevant columns
+                  select(-uri, -analysis_url, -time_signature) %>% 
+                  # add 1 columns with name for later when joining all of us 
+                  cbind("rock") %>% 
+                  # rename that column
+                  rename(name = '"rock"')
+
+# check if there are duplicates
+dupes <- rock_wfeat %>%
+  get_dupes(id)
+
+rock_rc <- rock %>% 
+  select(danceability, valence, speechiness, instrumentalness, acousticness, liveness, energy) %>% 
+  ggRadar(colour = "white",
+          # transparency
+          alpha = 0.8, 
+          # get rid of points
+          size = 0,
+          # set y axis limits
+          ylim = c(0,1))+
+  labs(title = "Rock",
+       caption = "Source: https://developer.spotify.com",
+       x = "",
+       y = "") +
+  # edit theme
+  theme(text = element_text(colour = "white", size = 10, family = "Helvetica Neue Bold"),
+        plot.title = element_text(size = 30, family = "Helvetica Neue Bold", hjust = 0),
+        plot.subtitle = element_text(size = 11, family = "Helvetica Neue Light", hjust = 0.5),
+        plot.caption = element_text(size = 6, family = "Helvetica Neue Light"),
+        axis.title.x = element_text(size = 10, family = "Helvetica Neue Bold"),
+        axis.text.x = element_text(colour = "white", size = 10, family = "Helvetica Neue Medium"),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        plot.margin=grid::unit(c(1,1,0.5,0.5), "cm"),
+        panel.grid = element_line(colour = "#f2f2f2", 
+                                  size = 0.4, 
+                                  linetype = 2),
+        plot.background = element_rect(fill = "#C95C3B"),
+        panel.background = element_rect(fill = "#C95C3B"),
+        legend.position = "none")+
+NULL
+
+```
+
+### Classical
+
+```{r classical}
+
+classical_basic <- getPlaylistSongs("spotify","37i9dQZF1DWWEJlAGA9gs0", token =  keys)
+
+classical_basic <- classical_basic %>%
+  unique()
+# get all features for that playlist
+
+# create data set with any 1 song
+classical_wfeat <- getFeatures("3bH4HzoZZFq8UpZmI2AMgV", token = keys)
+
+# for loop all song ids from the playlist through the getFeatures function
+for (i in classical_basic$id){
+  classical_wfeat <- rbind(classical_wfeat, getFeatures(i, token = keys))
+}
+                  
+# get rid of first line (that we added to set up the data frame)
+classical_wfeat <- classical_wfeat[-1,]
+
+# join playlist df and feature df to have all song info in one data set
+classical <- left_join(classical_basic, classical_wfeat, by = "id") 
+
+# fix data set
+classical <- classical %>% 
+                  # eliminate irrelevant columns
+                  select(-uri, -analysis_url, -time_signature) %>% 
+                  # add 1 columns with name for later when joining all of us 
+                  cbind("Classical") %>% 
+                  # rename that column
+                  rename(name = '"Classical"')
+
+# check if there are duplicates
+dupes <- rock_wfeat %>%
+  get_dupes(id)
+
+classical_rc <- classical %>% 
+  select(danceability, valence, speechiness, instrumentalness, acousticness, liveness, energy) %>% 
+  ggRadar(colour = "white",
+          # transparency
+          alpha = 0.8, 
+          # get rid of points
+          size = 0,
+          # set y axis limits
+          ylim = c(0,1))+
+  labs(title = "Classical",
+       caption = "Source: https://developer.spotify.com",
+       x = "",
+       y = "") +
+  # edit theme
+  theme(text = element_text(colour = "white", size = 10, family = "Helvetica Neue Bold"),
+        plot.title = element_text(size = 30, family = "Helvetica Neue Bold", hjust = 0),
+        plot.subtitle = element_text(size = 11, family = "Helvetica Neue Light", hjust = 0.5),
+        plot.caption = element_text(size = 6, family = "Helvetica Neue Light"),
+        axis.title.x = element_text(size = 10, family = "Helvetica Neue Bold"),
+        axis.text.x = element_text(colour = "white", size = 10, family = "Helvetica Neue Medium"),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        plot.margin=grid::unit(c(1,1,0.5,0.5), "cm"),
+        panel.grid = element_line(colour = "#f2f2f2", 
+                                  size = 0.4, 
+                                  linetype = 2),
+        plot.background = element_rect(fill = "#D2903C"),
+        panel.background = element_rect(fill = "#D2903C"),
+        legend.position = "none")+
+NULL
 
 
-########## WE WILL ADD CODE BUT IT'S BASICALLY MORE RADAR CHARTS BUT FOR 6 GENRES
+```
+
+### Metal
+
+```{r,metal }
+
+
+metal_basic <- getPlaylistSongs("spotify","37i9dQZF1DX9qNs32fujYe", token =  keys)
+
+metal_basic <- metal_basic %>%
+  unique()
+# get all features for that playlist
+
+# create data set with any 1 song
+metal_wfeat <- getFeatures("3bH4HzoZZFq8UpZmI2AMgV", token = keys)
+
+# for loop all song ids from the playlist through the getFeatures function
+for (i in metal_basic$id){
+  metal_wfeat <- rbind(metal_wfeat, getFeatures(i, token = keys))
+}
+                  
+# get rid of first line (that we added to set up the data frame)
+metal_wfeat <- metal_wfeat[-1,]
+
+# join playlist df and feature df to have all song info in one data set
+metal <- left_join(metal_basic, metal_wfeat, by = "id") 
+
+# fix data set
+metal <- metal %>% 
+                  # eliminate irrelevant columns
+                  select(-uri, -analysis_url, -time_signature) %>% 
+                  # add 1 columns with name for later when joining all of us 
+                  cbind("metal") %>% 
+                  # rename that column
+                  rename(name = '"metal"')
+
+# check if there are duplicates
+dupes <- rock_wfeat %>%
+  get_dupes(id)
+
+metal_rc <- metal %>% 
+  select(danceability, valence, speechiness, instrumentalness, acousticness, liveness, energy) %>% 
+  ggRadar(colour = "white",
+          # transparency
+          alpha = 0.8, 
+          # get rid of points
+          size = 0,
+          # set y axis limits
+          ylim = c(0,1))+
+  labs(title = "Metal",
+       caption = "Source: https://developer.spotify.com",
+       x = "",
+       y = "") +
+  # edit theme
+  theme(text = element_text(colour = "white", size = 10, family = "Helvetica Neue Bold"),
+        plot.title = element_text(size = 30, family = "Helvetica Neue Bold", hjust = 0),
+        plot.subtitle = element_text(size = 11, family = "Helvetica Neue Light", hjust = 0.5),
+        plot.caption = element_text(size = 6, family = "Helvetica Neue Light"),
+        axis.title.x = element_text(size = 10, family = "Helvetica Neue Bold"),
+        axis.text.x = element_text(colour = "white", size = 10, family = "Helvetica Neue Medium"),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        plot.margin=grid::unit(c(1,1,0.5,0.5), "cm"),
+        panel.grid = element_line(colour = "#f2f2f2", 
+                                  size = 0.4, 
+                                  linetype = 2),
+        plot.background = element_rect(fill = "#6A1F2B"),
+        panel.background = element_rect(fill = "#6A1F2B"),
+        legend.position = "none")+
+NULL
+
+```
+
+### Country
+
+```{r, country}
+
+
+country_basic <- getPlaylistSongs("spotify","37i9dQZF1DX1lVhptIYRda", token =  keys)
+
+country_basic <- country_basic %>%
+  unique()
+# get all features for that playlist
+
+# create data set with any 1 song
+country_wfeat <- getFeatures("3bH4HzoZZFq8UpZmI2AMgV", token = keys)
+
+# for loop all song ids from the playlist through the getFeatures function
+for (i in country_basic$id){
+  country_wfeat <- rbind(country_wfeat, getFeatures(i, token = keys))
+}
+                  
+# get rid of first line (that we added to set up the data frame)
+country_wfeat <- country_wfeat[-1,]
+
+# join playlist df and feature df to have all song info in one data set
+country <- left_join(country_basic, country_wfeat, by = "id") 
+
+# fix data set
+country <- country %>% 
+                  # eliminate irrelevant columns
+                  select(-uri, -analysis_url, -time_signature) %>% 
+                  # add 1 columns with name for later when joining all of us 
+                  cbind("country") %>% 
+                  # rename that column
+                  rename(name = '"country"')
+
+# check if there are duplicates
+dupes <- rock_wfeat %>%
+  get_dupes(id)
+
+country_rc <- country %>% 
+  select(danceability, valence, speechiness, instrumentalness, acousticness, liveness, energy) %>% 
+  ggRadar(colour = "white",
+          # transparency
+          alpha = 0.8, 
+          # get rid of points
+          size = 0,
+          # set y axis limits
+          ylim = c(0,1))+
+  labs(title = "Country",
+       caption = "Source: https://developer.spotify.com",
+       x = "",
+       y = "") +
+  # edit theme
+  theme(text = element_text(colour = "white", size = 10, family = "Helvetica Neue Bold"),
+        plot.title = element_text(size = 30, family = "Helvetica Neue Bold", hjust = 0),
+        plot.subtitle = element_text(size = 11, family = "Helvetica Neue Light", hjust = 0.5),
+        plot.caption = element_text(size = 6, family = "Helvetica Neue Light"),
+        axis.title.x = element_text(size = 10, family = "Helvetica Neue Bold"),
+        axis.text.x = element_text(colour = "white", size = 10, family = "Helvetica Neue Medium"),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        plot.margin=grid::unit(c(1,1,0.5,0.5), "cm"),
+        panel.grid = element_line(colour = "#f2f2f2", 
+                                  size = 0.4, 
+                                  linetype = 2),
+        plot.background = element_rect(fill = "#C54190"),
+        panel.background = element_rect(fill = "#C54190"),
+        legend.position = "none")+
+NULL
+
+
+
+```
+
+### All
+
+```{r all genres}
+indie_rc
+hiphop_rc
+rock_rc
+classical_rc
+metal_rc
+country_rc
+
+#indie_rc + ggsave('indie.jpeg', height = 5, width = 5, units = 'in')
+#hiphop_rc + ggsave('hiphop.jpeg', height = 5, width = 5, units = 'in')
+#rock_rc + ggsave('rock.jpeg', height = 5, width = 5, units = 'in')
+#classical_rc + ggsave('classial.jpeg', height = 5, width = 5, units = 'in')
+#metal_rc + ggsave('metal.jpeg', height = 5, width = 5, units = 'in')
+#country_rc + ggsave('country.jpeg', height = 5, width = 5, units = 'in')
+```
+
 
 ## Time
 
